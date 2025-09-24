@@ -3,9 +3,10 @@ package handlers
 import (
 	"crypto/md5"
 	"fmt"
-	"github.com/dustin/go-humanize"
 	"io"
 	"net/http"
+
+	"github.com/dustin/go-humanize"
 
 	"github.com/root-gg/plik/server/common"
 	"github.com/root-gg/plik/server/context"

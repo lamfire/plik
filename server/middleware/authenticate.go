@@ -1,8 +1,11 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/root-gg/plik/server/common"
 	"github.com/root-gg/plik/server/context"
 )
@@ -33,6 +36,60 @@ func getUserFromToken(ctx *context.Context) (*common.User, *common.Token, *commo
 	}
 
 	return nil, nil, nil
+}
+
+func getUserFromJWT(ctx *context.Context) (*common.User, *common.HTTPError) {
+	req := ctx.GetReq()
+	authenticator := ctx.GetAuthenticator()
+
+	// Check Authorization header
+	authHeader := req.Header.Get("Authorization")
+	if authHeader == "" {
+		return nil, nil
+	}
+
+	// Parse Bearer JWT
+	parts := strings.Split(authHeader, " ")
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		return nil, nil
+	}
+
+	jwtToken := parts[1]
+
+	// Parse JWT using the same signature key as session cookies
+	token, err := jwt.Parse(jwtToken, func(t *jwt.Token) (interface{}, error) {
+		// Verify signing algorithm
+		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
+		}
+		return []byte(authenticator.SignatureKey), nil
+	})
+
+	if err != nil {
+		return nil, &common.HTTPError{Message: "invalid JWT token", Err: err, StatusCode: http.StatusForbidden}
+	}
+
+	// Get user ID from claims
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return nil, &common.HTTPError{Message: "invalid JWT claims", StatusCode: http.StatusForbidden}
+	}
+
+	userID, ok := claims["uid"].(string)
+	if !ok {
+		return nil, &common.HTTPError{Message: "missing user ID in JWT", StatusCode: http.StatusForbidden}
+	}
+
+	// Get user from metadata backend
+	user, err := ctx.GetMetadataBackend().GetUser(userID)
+	if err != nil {
+		return nil, &common.HTTPError{Message: "unable to get user", Err: err, StatusCode: http.StatusInternalServerError}
+	}
+	if user == nil {
+		return nil, &common.HTTPError{Message: "user not found", StatusCode: http.StatusForbidden}
+	}
+
+	return user, nil
 }
 
 func getUserFromSessionCookie(ctx *context.Context) (*common.User, *common.HTTPError) {
@@ -78,6 +135,23 @@ func Authenticate(allowToken bool) context.Middleware {
 		return http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
 			config := ctx.GetConfig()
 			if config.FeatureAuthentication != common.FeatureDisabled {
+				// 1. Try JWT authentication first
+				user, err := getUserFromJWT(ctx)
+				if err != nil {
+					ctx.Error(err)
+					return
+				}
+
+				if user != nil {
+					// Save user in the request context
+					ctx.SetUser(user)
+
+					// Continue to the next middleware in the chain
+					next.ServeHTTP(resp, req)
+					return
+				}
+
+				// 2. Try token authentication
 				if allowToken {
 					user, token, err := getUserFromToken(ctx)
 					if err != nil {
@@ -96,7 +170,8 @@ func Authenticate(allowToken bool) context.Middleware {
 					}
 				}
 
-				user, err := getUserFromSessionCookie(ctx)
+				// 3. Try session cookie authentication
+				user, err = getUserFromSessionCookie(ctx)
 				if err != nil {
 					common.Logout(resp, ctx.GetAuthenticator())
 					ctx.Error(err)
