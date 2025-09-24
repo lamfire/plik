@@ -43,6 +43,9 @@ ENV CC=$CC
 # Add the source code ( see .dockerignore )
 COPY . .
 
+ARG VERSION="1.3.8"
+ENV VERSION=$VERSION
+
 RUN releaser/releaser.sh
 
 ##################################################################################
