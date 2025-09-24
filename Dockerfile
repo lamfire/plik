@@ -1,5 +1,5 @@
 ##################################################################################
-FROM --platform=$BUILDPLATFORM node:20-alpine AS plik-frontend-builder
+FROM --platform=${BUILDPLATFORM:-linux/amd64} node:20-alpine AS plik-frontend-builder
 RUN echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/main/" > /etc/apk/repositories && \
     echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/community/" >> /etc/apk/repositories
 # Install needed binaries
@@ -12,7 +12,7 @@ COPY webapp /webapp
 RUN make clean-frontend frontend
 
 ##################################################################################
-FROM --platform=$BUILDPLATFORM golang:1-bullseye AS plik-builder
+FROM --platform=${BUILDPLATFORM:-linux/amd64} golang:1-bullseye AS plik-builder
 
 ENV GOPROXY=https://goproxy.cn,direct
 ENV GOPRIVATE=
