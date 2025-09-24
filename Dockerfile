@@ -1,6 +1,7 @@
 ##################################################################################
 FROM --platform=$BUILDPLATFORM node:20-alpine AS plik-frontend-builder
-
+RUN echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/main/" > /etc/apk/repositories && \
+    echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/community/" >> /etc/apk/repositories
 # Install needed binaries
 RUN apk add --no-cache git make bash
 
@@ -12,6 +13,13 @@ RUN make clean-frontend frontend
 
 ##################################################################################
 FROM --platform=$BUILDPLATFORM golang:1-bullseye AS plik-builder
+
+ENV GOPROXY=https://goproxy.cn,direct
+ENV GOPRIVATE=
+ENV GOSUMDB=off
+
+RUN sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list && \
+    sed -i 's/security.debian.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
 
 # Install needed binaries
 RUN apt-get update && apt-get install -y build-essential crossbuild-essential-armhf crossbuild-essential-armel crossbuild-essential-arm64 crossbuild-essential-i386
@@ -44,7 +52,8 @@ COPY --from=plik-builder --chown=1000:1000 /go/src/github.com/root-gg/plik/plik-
 
 ##################################################################################
 FROM alpine:3.18 AS plik-image
-
+RUN echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/main/" > /etc/apk/repositories && \
+    echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/community/" >> /etc/apk/repositories
 RUN apk add --no-cache ca-certificates
 
 # Create plik user
