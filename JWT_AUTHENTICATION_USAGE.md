@@ -167,7 +167,7 @@ FeatureAuthentication = "enabled"  # 或 "forced"
 
 ### 2. 获取签名密钥
 
-签名密钥存储在数据库中，可以通过以下方式获取：
+**重要**：Plik 的签名密钥存储在数据库的 `settings` 表中，而不是通过环境变量配置。可以通过以下方式获取：
 
 #### 方法 1：通过数据库查询
 
@@ -178,12 +178,18 @@ SELECT value FROM settings WHERE key = 'authentication_signature_key';
 #### 方法 2：通过 Plik 管理命令
 
 ```bash
-# 查看当前配置
+# 查看当前配置（需要先启动服务器）
 ./plikd config
+```
 
-# 或者通过 API
+#### 方法 3：通过 API 端点
+
+```bash
+# 启动服务器后通过 API 获取
 curl http://127.0.0.1:8080/config | jq '.authenticationSignatureKey'
 ```
+
+**注意**：如果数据库中不存在签名密钥，Plik 会在首次启动时自动生成一个随机密钥并存储到数据库中。
 
 ## 安全注意事项
 

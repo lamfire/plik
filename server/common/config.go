@@ -84,6 +84,8 @@ type Configuration struct {
 	Stream              bool `json:"stream"`              // Deprecated: >1.3.6
 	ProtectedByPassword bool `json:"protectedByPassword"` // Deprecated: >1.3.6
 
+	AuthenticationSignatureKey string `json:"authenticationSignatureKey"`
+
 	GoogleAuthentication bool     `json:"googleAuthentication"`
 	GoogleAPISecret      string   `json:"-"`
 	GoogleAPIClientID    string   `json:"-"`

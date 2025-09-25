@@ -40,7 +40,7 @@ func getUserFromToken(ctx *context.Context) (*common.User, *common.Token, *commo
 
 func getUserFromJWT(ctx *context.Context) (*common.User, *common.HTTPError) {
 	req := ctx.GetReq()
-	authenticator := ctx.GetAuthenticator()
+	jwtSignatureKey := ctx.GetConfig().AuthenticationSignatureKey
 
 	// Check Authorization header
 	authHeader := req.Header.Get("Authorization")
@@ -62,7 +62,7 @@ func getUserFromJWT(ctx *context.Context) (*common.User, *common.HTTPError) {
 		if _, ok := t.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
 		}
-		return []byte(authenticator.SignatureKey), nil
+		return []byte(jwtSignatureKey), nil
 	})
 
 	if err != nil {
