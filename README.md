@@ -291,6 +291,11 @@ Plik 将尝试通过将 Content-Type 覆盖为 "text-plain" 而不是 "text/html
 
 除此之外，还强烈建议在单独的（子）域上提供上传的文件，以对抗网络钓鱼链接，并使用 DownloadDomain 配置参数保护 Plik 的会话 cookie。
 
+### 构建docker镜像
+```
+docker build --platform linux/amd64 -t plik:latest .
+```
+
 ### 交叉编译 <a name="cross-compilation"></a>
 
 所有二进制文件现在都是静态链接的。客户端可以安全地交叉编译到所有操作系统/架构，因为它们不依赖 GCO（sqlite）

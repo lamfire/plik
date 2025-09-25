@@ -85,6 +85,7 @@ type Configuration struct {
 	ProtectedByPassword bool `json:"protectedByPassword"` // Deprecated: >1.3.6
 
 	AuthenticationSignatureKey string `json:"authenticationSignatureKey"`
+	AllowAnonymous             bool   `json:"allowAnonymous"`
 
 	GoogleAuthentication bool     `json:"googleAuthentication"`
 	GoogleAPISecret      string   `json:"-"`

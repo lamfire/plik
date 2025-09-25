@@ -16,6 +16,11 @@ func User(ctx *context.Context, next http.Handler) http.Handler {
 			return
 		}
 
+		if ctx.GetConfig().AllowAnonymous {
+			next.ServeHTTP(resp, req)
+			return
+		}
+
 		// Get the user id from the url params
 		vars := mux.Vars(req)
 		userID := vars["userID"]
