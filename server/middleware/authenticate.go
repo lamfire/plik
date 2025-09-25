@@ -38,7 +38,7 @@ func getUserFromToken(ctx *context.Context) (*common.User, *common.Token, *commo
 	return nil, nil, nil
 }
 
-func getUserFromJWT(ctx *context.Context) (*common.User, *common.HTTPError) {
+func VerifyJWT(ctx *context.Context) (jwt.MapClaims, *common.HTTPError) {
 	req := ctx.GetReq()
 	jwtSignatureKey := ctx.GetConfig().AuthenticationSignatureKey
 
@@ -75,12 +75,14 @@ func getUserFromJWT(ctx *context.Context) (*common.User, *common.HTTPError) {
 		return nil, &common.HTTPError{Message: "invalid JWT claims", StatusCode: http.StatusForbidden}
 	}
 
+	return claims, nil
+}
+func getUserFromJWTClaims(ctx *context.Context, claims jwt.MapClaims) (*common.User, *common.HTTPError) {
 	userID, ok := claims["uid"].(string)
 	if !ok {
 		return nil, &common.HTTPError{Message: "missing user ID in JWT", StatusCode: http.StatusForbidden}
 	}
 
-	// Get user from metadata backend
 	user, err := ctx.GetMetadataBackend().GetUser(userID)
 	if err != nil {
 		return nil, &common.HTTPError{Message: "unable to get user", Err: err, StatusCode: http.StatusInternalServerError}
@@ -88,7 +90,6 @@ func getUserFromJWT(ctx *context.Context) (*common.User, *common.HTTPError) {
 	if user == nil {
 		return nil, &common.HTTPError{Message: "user not found", StatusCode: http.StatusForbidden}
 	}
-
 	return user, nil
 }
 
@@ -136,17 +137,22 @@ func Authenticate(allowToken bool) context.Middleware {
 			config := ctx.GetConfig()
 			if config.FeatureAuthentication != common.FeatureDisabled {
 				// 1. Try JWT authentication first
-				user, err := getUserFromJWT(ctx)
+				claims, err := VerifyJWT(ctx)
 				if err != nil {
 					ctx.Error(err)
 					return
 				}
-
-				if user != nil {
-					// Save user in the request context
-					ctx.SetUser(user)
-
-					// Continue to the next middleware in the chain
+				if claims != nil {
+					if !config.AllowAnonymous {
+						user, err := getUserFromJWTClaims(ctx, claims)
+						if err != nil {
+							ctx.Error(err)
+							return
+						}
+						if user != nil {
+							ctx.SetUser(user)
+						}
+					}
 					next.ServeHTTP(resp, req)
 					return
 				}
@@ -171,7 +177,7 @@ func Authenticate(allowToken bool) context.Middleware {
 				}
 
 				// 3. Try session cookie authentication
-				user, err = getUserFromSessionCookie(ctx)
+				user, err := getUserFromSessionCookie(ctx)
 				if err != nil {
 					common.Logout(resp, ctx.GetAuthenticator())
 					ctx.Error(err)
