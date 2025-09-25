@@ -447,6 +447,8 @@ func (config *Configuration) String() string {
 			str += "OVH authentication : disabled\n"
 		}
 	}
+	str += fmt.Sprintf("Allow anonymous : %s\n", config.AllowAnonymous)
+	str += fmt.Sprintf("Authentication signature key : %s\n", config.AuthenticationSignatureKey)
 
 	return str
 }

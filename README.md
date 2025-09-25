@@ -5,8 +5,6 @@
 [![GoDoc](https://godoc.org/github.com/root-gg/plik?status.svg)](https://godoc.org/github.com/root-gg/plik)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
-想和我们聊天吗？Telegram 频道：https://t.me/plik_rootgg
-
 # Plik
 
 Plik 是一个用 Go 语言编写的可扩展且友好的临时文件上传系统（类似 Wetransfer）。
