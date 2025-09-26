@@ -1,57 +1,57 @@
 ### Docker
-Plik comes with a simple Dockerfile that allows you to run it inside a docker container.
+Plik 提供了一个简单的 Dockerfile，允许您在 docker 容器中运行它。
 
-##### Getting image from docker registry
+##### 从 docker 注册表获取镜像
 
 ```sh
-$ docker pull rootgg/plik:latest
+$ docker pull lamfire8390/plik:latest
 ```
 
-##### Building the docker image
+##### 构建 docker 镜像
 
-First, you need to build the docker image :   
+首先，您需要构建 docker 镜像：   
 ```sh
 $ make docker
 ```
 
-##### Configuration
+##### 配置
 
-Then you can run an instance and map the local port 8080 to the plik port :   
+然后您可以运行一个实例并将本地端口 8080 映射到 plik 端口：   
 ```sh
 $ docker run -t -d -p 8080:8080 rootgg/plik
 ab9b2c99da1f3e309cd3b12392b9084b5cafcca0325d7d47ff76f5b1e475d1b9
 ```
 
-To use a different config file, you can map a single file to the container at runtime :   
-Here, we map local folder plikd.cfg to the home/plik/server/plikd.cfg which is the default config file location in the container :   
+要使用不同的配置文件，您可以在运行时将单个文件映射到容器：   
+这里，我们将本地文件 plikd.cfg 映射到 home/plik/server/plikd.cfg，这是容器中的默认配置文件位置：   
 ```sh
 $ docker run -t -d -p 8080:8080 -v plikd.cfg:/home/plik/server/plikd.cfg rootgg/plik
 ab9b2c99da1f3e309cd3b12392b9084b5cafcca0325d7d47ff76f5b1e475d1b9
 ```
 
-You can also use a volume to store uploads outside the container :   
-Here, we map local folder /data to the /home/plik/server/files folder of the container which is the default upload directory :   
+您还可以使用卷将上传存储在容器外部：   
+这里，我们将本地文件夹 /data 映射到容器的 /home/plik/server/files 文件夹，这是默认的上传目录：   
 ```sh
 $ docker run -t -d -p 8080:8080 -v /data:/home/plik/server/files rootgg/plik
 ab9b2c99da1f3e309cd3b12392b9084b5cafcca0325d7d47ff76f5b1e475d1b9
 ```
 
 
-### Usage with docker-compose
+### 使用 docker-compose
 
-Use this example file to set up your instance with all persistent data/metadata. All files, accounts and tokens will be persistent in this configuration.
-Adjust directories to your like.
+使用此示例文件设置您的实例，包含所有持久数据/元数据。在此配置中，所有文件、账户和令牌都将持久保存。
+根据您的需要调整目录。
 
 ```
 $ cd ~
 $ mkdir plik
-$ curl https://raw.githubusercontent.com/root-gg/plik/master/server/plikd.cfg # copy server configuration
-$ plik mkdir data # create directory to save files and/or metadata outside of the docker image
-$ plik chown 1000:1000 data # match UIDs with docker
-$ plik chown 1000:1000 plikd.cfg # match UIDs with docker
+$ curl https://raw.githubusercontent.com/lamfire/plik/master/server/plikd.cfg # 复制服务器配置
+$ plik mkdir data # 创建目录以在 docker 镜像外保存文件和/或元数据
+$ plik chown 1000:1000 data # 与 docker 匹配 UID
+$ plik chown 1000:1000 plikd.cfg # 与 docker 匹配 UID
 ```
 
-Edit plikd.cfg to point the metadata and/or data to a mountpoint that you can match in docker-compose (/data in this example)
+编辑 plikd.cfg 将元数据和/或数据指向您可以在 docker-compose 中匹配的挂载点（此示例中为 /data）
 ```
 DataBackend = "file"
 [DataBackendConfig]
@@ -62,12 +62,12 @@ DataBackend = "file"
     ConnectionString = "/data/plik.db" # <===
 ```
 
-Create a docker-compose.yml file with the following content
+创建包含以下内容的 docker-compose.yml 文件
 ```yaml
 version: "2"
 services:
   plik:
-    image: rootgg/plik:latest
+    image: lamfire8390/plik:latest
     container_name: plik
     volumes:
       - /home/{user}/plik/plikd.cfg:/home/plik/server/plikd.cfg
@@ -85,5 +85,4 @@ plik    | [01/27/2022 10:48:26][INFO    ] Starting plikd server v...
 plik    | [01/27/2022 10:48:26][INFO    ] Starting server at http://0.0.0.0:8080
 ```
 
-Reach out on telegram on this thread if you need help or have any suggestion :
-https://github.com/root-gg/plik/issues/326
+
