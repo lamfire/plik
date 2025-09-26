@@ -5,7 +5,7 @@
     <!-- META -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="临时文件上传服务">
+    <meta name="description" content="Plik临时文件上传服务">
     <meta name="author" content="Mathieu Bodjikian, Charles-Antoine Mathieu">
 
     <title ng-bind="title"></title>
@@ -38,7 +38,7 @@
                         <a ng-if="isFeatureEnabled('authentication') && user && user.admin" href="#/admin"><i
                                 class="fa fa-wrench"></i> 管理员&nbsp;</a>
                         <a ng-if="isFeatureEnabled('clients')" href="#/clients"><i class="fa fa-keyboard-o"></i>
-                            命令行客户端</a>
+                            客户端</a>
                         <a ng-if="isFeatureEnabled('github')" href="https://github.com/lamfire/plik/"><i
                                 class="fa fa-github"></i> 源代码</a>
                     </div>
@@ -58,7 +58,7 @@
     <!-- FOOTER -->
     <footer class="footer" ng-controller="MenuCtrl">
         <div ng-if="config.abuseContact" class="container text-center">
-            <p>举报滥用请联系 {{config.abuseContact}}</p>
+            <p>滥用举报 {{config.abuseContact}}</p>
         </div>
     </footer>
 
