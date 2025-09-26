@@ -20,29 +20,27 @@ module.exports = function (grunt) {
             },
             js_vendors: {
                 src: [
-                    'bower_components/jquery/dist/jquery.js',
-                    'bower_components/bootstrap/dist/js/bootstrap.js',
-                    'bower_components/angular/angular.js',
-                    'bower_components/ng-file-upload/ng-file-upload-shim.js',
-                    'bower_components/ng-file-upload/ng-file-upload.js',
-                    'bower_components/angular-sanitize/angular-sanitize.min.js',
-                    'bower_components/angular-route/angular-route.js',
-                    'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-                    'bower_components/angular-markdown-directive/markdown.js',
-                    'bower_components/underscore/underscore.js',
-                    'bower_components/filesize/lib/filesize.js',
-                    'bower_components/showdown/src/showdown.js',
-                    'bower_components/clipboard/dist/clipboard.js'
+                    'node_modules/jquery/dist/jquery.js',
+                    'node_modules/bootstrap/dist/js/bootstrap.js',
+                    'node_modules/angular/angular.js',
+                    'node_modules/ng-file-upload/ng-file-upload-shim.js',
+                    'node_modules/ng-file-upload/ng-file-upload.js',
+                    'node_modules/angular-sanitize/angular-sanitize.min.js',
+                    'node_modules/angular-route/angular-route.js',
+                    'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
+                    'node_modules/angular-markdown-directive/markdown.js',
+                    'node_modules/underscore/underscore.js',
+                    'node_modules/filesize/lib/filesize.js',
+                    'node_modules/showdown/dist/showdown.js',
+                    'node_modules/clipboard/dist/clipboard.js'
                 ],
                 dest: 'dist/js/vendor.js'
 
             },
             css_vendors: {
                 src: [
-                    'bower_components/bootstrap/dist/css/bootstrap.css',
-                    'bower_components/bootstrap-flat/css/bootstrap-flat.css',
-                    'bower_components/bootstrap-flat/css/bootstrap-flat-extras.css',
-                    'bower_components/fontawesome/css/font-awesome.css',
+                    'node_modules/bootstrap/dist/css/bootstrap.css',
+                    'node_modules/font-awesome/css/font-awesome.css',
                     'css/water_drop.css'
                 ],
                 dest: 'dist/css/vendor.css'
@@ -89,8 +87,8 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     src: [
-                        'bower_components/bootstrap/fonts/*',
-                        'bower_components/fontawesome/fonts/*',
+                        'node_modules/bootstrap/fonts/*',
+                        'node_modules/font-awesome/fonts/*',
                         'fonts/*'
                     ],
                     dest: 'dist/fonts/',

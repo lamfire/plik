@@ -13,7 +13,7 @@ release
 releases
 debs
 plikd_*.cfg
-*bower_components
+
 *node_modules
 *.log
 *.key

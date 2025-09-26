@@ -20,7 +20,6 @@ all: clean clean-frontend frontend clients server
 ###
 frontend:
 	@if [ ! -d webapp/node_modules ]; then cd webapp && npm install ; fi
-	@if [ ! -d webapp/bower_components ]; then cd webapp && node_modules/bower/bin/bower install --allow-root ; fi
 	@cd webapp && node_modules/grunt-cli/bin/grunt
 
 ###
@@ -129,7 +128,6 @@ clean:
 # Remove frontend build files
 ###
 clean-frontend:
-	@rm -rf webapp/bower_components
 	@rm -rf webapp/dist
 
 ###
