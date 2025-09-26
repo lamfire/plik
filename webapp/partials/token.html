@@ -6,21 +6,20 @@
                 <div class="row center-block">
                     <div class="col-xs-10 col-xs-offset-1">
                         <p>
-                            Plik tokens allow you to upload files without source IP restriction.
+                            Plik 令牌允许您在没有源 IP 限制的情况下上传文件。
                         <ul>
                             <li>
-                                Tokens can only be generated from a valid source IP.
+                                令牌只能从有效的源 IP 生成。
                             </li>
                             <li>
-                                You can save a token to the local storage of your web browser
-                                by clicking the remember button.
+                                您可以通过点击记住按钮将令牌保存到浏览器的本地存储中。
                             </li>
                             <li>
-                                If you are using the command line client
-                                you can use a token by adding a Token = "xxxx" line to your ~/.plikrc file.
+                                如果您使用命令行客户端，
+                                可以通过在 ~/.plikrc 文件中添加 Token = "xxxx" 行来使用令牌。
                             </li>
                             <li>
-                                You can list all uploads owned by a token with the browse button.
+                                您可以使用浏览按钮列出令牌拥有的所有上传。
                             </li>
                         </ul>
                         </p>
@@ -29,12 +28,12 @@
                 <div class="col-xs-10 col-sm-8 col-md-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-3">
                     <div class="row">
                         <div class="input-group">
-                            <input id="login" type="text" ng-model="token" class="form-control" placeholder="Token">
+                            <input id="login" type="text" ng-model="token" class="form-control" placeholder="令牌">
                             <!-- BROWSE BUTTON -->
                             <div class="input-group-btn">
                                 <button title="Browse" type="button" class="btn btn-default" ng-click="browse()">
                                     <i class="glyphicon glyphicon-search"></i>
-                                    <span class="hidden-xs hidden-sm hidden-md"> Browse</span>
+                                    <span class="hidden-xs hidden-sm hidden-md"> 浏览</span>
                                 </button>
                             </div>
                         </div>
@@ -46,21 +45,21 @@
                         <div class="col-xs-4 text-center">
                             <button title="Generate" type="button" class="btn btn-success" ng-click="generate()">
                                 <span class="glyphicon glyphicon-refresh"></span>
-                                <span class="hidden-xs hidden-sm hidden-md"> Generate</span>
+                                <span class="hidden-xs hidden-sm hidden-md"> 生成</span>
                             </button>
                         </div>
                         <!-- SAVE BUTTON -->
                         <div class="col-xs-4 text-center">
                             <button title="Save" type="button" class="btn btn-primary" ng-click="save()">
                                 <span class="glyphicon glyphicon-save"></span>
-                                <span class="hidden-xs hidden-sm hidden-md"> Remember</span>
+                                <span class="hidden-xs hidden-sm hidden-md"> 记住</span>
                             </button>
                         </div>
                         <!-- REVOKE BUTTON -->
                         <div class="col-xs-4 text-center">
                             <button title="Revoke" type="button" class="btn btn-danger" ng-click="revoke()">
                                 <span class="glyphicon glyphicon-remove"></span>
-                                <span class="hidden-xs hidden-sm hidden-md"> Revoke</span>
+                                <span class="hidden-xs hidden-sm hidden-md"> 撤销</span>
                             </button>
                         </div>
                     </div>
@@ -79,10 +78,10 @@
                     <a href="{{getUploadUrl(upload)}}">{{ upload.id }}</a>
                     <br/>
                     <!-- UPLOAD DATE -->
-                    uploaded : {{ upload.uploadDate * 1000 | date:'medium' }}
+                    上传时间 : {{ upload.uploadDate * 1000 | date:'medium' }}
                     <br/>
                     <!-- EXPIRE DATE -->
-                    expire : {{ upload.ttl == -1 ? 'never expire' : (upload.uploadDate + upload.ttl) * 1000
+                    过期时间 : {{ upload.ttl == -1 ? '永不过期' : (upload.uploadDate + upload.ttl) * 1000
                     | date:'medium' }}
                 </div>
                 <div class="col-xs-12 col-sm-6 small file-name">
@@ -96,7 +95,7 @@
                 <div class="col-xs-12 col-sm-2 text-center">
                     <!-- REMOVE -->
                     <button class="btn btn-danger btn-sm" ng-click="remove(upload)">
-                        <span class="glyphicon glyphicon-remove"></span><span class="hidden-xs hidden-sm hidden-md"> Remove</span>
+                        <span class="glyphicon glyphicon-remove"></span><span class="hidden-xs hidden-sm hidden-md"> 删除</span>
                     </button>
                 </div>
             </div>

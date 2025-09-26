@@ -1,5 +1,3 @@
-
-
 <!-- ADMIN HOME -->
 <div class="row" ng-if="original_user && original_user.admin">
     <div class="col-sm-3 center-block">
@@ -20,7 +18,7 @@
         <div class="tile menu">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="displayStats()">
-                    <i class="fa fa-line-chart"></i> Stats
+                    <i class="fa fa-line-chart"></i> 统计
                 </button>
             </div>
         </div>
@@ -28,7 +26,7 @@
         <div class="tile menu">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="displayUploads()">
-                    <i class="fa fa-files-o"></i> Uploads
+                    <i class="fa fa-files-o"></i> 上传
                 </button>
             </div>
         </div>
@@ -36,7 +34,7 @@
         <div class="tile menu">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="displayUsers()">
-                    <i class="fa fa-users"></i> Users
+                    <i class="fa fa-users"></i> 用户
                 </button>
             </div>
         </div>
@@ -44,7 +42,7 @@
         <div class="tile menu">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="createUser()">
-                    <i class="fa fa-user"></i> Create User
+                    <i class="fa fa-user"></i> 创建用户
                 </button>
             </div>
         </div>
@@ -58,16 +56,16 @@
                     <div class="tile panel panel-body main">
                         <div class="row center-block text-center">
                             <p>
-                                Max File Size : {{humanReadableSize(config.maxFileSize)}}
+                                最大文件大小 : {{humanReadableSize(config.maxFileSize)}}
                             </p>
                             <p>
-                                Max User Size : {{humanReadableSize(config.maxUserSize)}}
+                                最大用户大小 : {{humanReadableSize(config.maxUserSize)}}
                             </p>
                             <p>
-                                Default TTL : {{getHumanReadableTTLString(config.defaultTTL)}}
+                                默认 TTL : {{getHumanReadableTTLString(config.defaultTTL)}}
                             </p>
                             <p>
-                                Max TTL : {{getHumanReadableTTLString(config.maxTTL)}}
+                                最大 TTL : {{getHumanReadableTTLString(config.maxTTL)}}
                             </p>
                         </div>
                     </div>
@@ -78,22 +76,22 @@
                     <div class="tile panel panel-body main">
                         <div class="row center-block text-center">
                             <p>
-                                Users : {{stats.users}}
+                                用户 : {{stats.users}}
                             </p>
                             <p>
-                                Uploads : {{stats.uploads}}
+                                上传 : {{stats.uploads}}
                             </p>
                             <p>
-                                Anonymous Uploads : {{stats.anonymousUploads}}
+                                匿名上传 : {{stats.anonymousUploads}}
                             </p>
                             <p>
-                                Files : {{stats.files}}
+                                文件 : {{stats.files}}
                             </p>
                             <p>
-                                Total Size : {{ humanReadableSize(stats.totalSize) }}
+                                总大小 : {{ humanReadableSize(stats.totalSize) }}
                             </p>
                             <p>
-                                Anonymous Total Size : {{ humanReadableSize(stats.anonymousTotalSize) }}
+                                匿名总大小 : {{ humanReadableSize(stats.anonymousTotalSize) }}
                             </p>
                         </div>
                     </div>
@@ -107,17 +105,18 @@
                     <div class="row center-block text-center" ng-if="fake_user">
                         <div class="tile panel panel-body main text-center">
                             <p>
-                                Hello {{original_user.name}}. You are currently impersonating {{fake_user.name}} ({{fake_user.id}}).
+                                你好 {{original_user.name}}。你当前正在模拟 {{fake_user.name}} ({{fake_user.id}})。
                             </p>
 
-                            <div class="col-xs-10 col-sm-8 col-md-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 text-center">
+                            <div
+                                class="col-xs-10 col-sm-8 col-md-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 text-center">
                                 <div class="input-group">
                                     <!-- CANCEL IMPERSONATE BUTTON -->
                                     <div class="input-group-btn">
                                         <button title="Browse" type="button" class="btn btn-danger"
-                                                ng-click="impersonate()">
+                                            ng-click="impersonate()">
                                             <i class="glyphicon glyphicon-remove"></i>
-                                            <span class="hidden-xs hidden-sm hidden-md"> Cancel</span>
+                                            <span class="hidden-xs hidden-sm hidden-md"> 取消</span>
                                         </button>
                                     </div>
                                 </div>
@@ -128,34 +127,33 @@
                         <div class="tile panel panel-body main text-center" ng-repeat="user in users">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    {{user.login}}<br/>
-                                    ({{user.provider}})<br/>
+                                    {{user.login}}<br />
+                                    ({{user.provider}})<br />
                                     <p ng-if="user.admin"><span class="label label-success">admin</span></p>
                                 </div>
                                 <div class="col-sm-3 hidden-md hidden-sm hidden-xs">
-                                    {{user.name}}<br/>
+                                    {{user.name}}<br />
                                     {{user.email}}
                                 </div>
                                 <div class="col-sm-3 file-name">
-                                    max file size : {{getUserMaxFileSize(user)}}<br/>
-                                    max user size : {{getUserMaxUserSize(user)}}<br/>
-                                    max TTL : {{getUserMaxTTL(user)}}
+                                    最大文件大小 : {{getUserMaxFileSize(user)}}<br />
+                                    最大用户大小 : {{getUserMaxUserSize(user)}}<br />
+                                    最大 TTL : {{getUserMaxTTL(user)}}
                                 </div>
                                 <div class="col-sm-3">
                                     <button title="Impersonate" type="button" class="btn btn-success"
-                                            ng-click="impersonate(user)" ng-disabled="user.id === original_user.id">
+                                        ng-click="impersonate(user)" ng-disabled="user.id === original_user.id">
                                         <i class="glyphicon glyphicon-ok"></i>
-                                        <span class="hidden-xs hidden-sm hidden-md"> Impersonate</span>
+                                        <span class="hidden-xs hidden-sm hidden-md"> 模拟</span>
                                     </button>
-                                    <button title="Edit" type="button" class="btn btn-info"
-                                            ng-click="editUser(user)">
+                                    <button title="Edit" type="button" class="btn btn-info" ng-click="editUser(user)">
                                         <i class="glyphicon glyphicon-pencil"></i>
-                                        <span class="hidden-xs hidden-sm hidden-md"> Edit</span>
+                                        <span class="hidden-xs hidden-sm hidden-md"> 编辑</span>
                                     </button>
                                     <button title="Edit" type="button" class="btn btn-danger"
-                                            ng-click="deleteUser(user)">
+                                        ng-click="deleteUser(user)">
                                         <i class="glyphicon glyphicon-remove"></i>
-                                        <span class="hidden-xs hidden-sm hidden-md"> Delete</span>
+                                        <span class="hidden-xs hidden-sm hidden-md"> 删除</span>
                                     </button>
                                 </div>
                             </div>
@@ -167,7 +165,7 @@
                             <div class="tile panel panel-body main" ng-click="displayUsers(true)">
                                 <div class="row">
                                     <div class="col-xs-12 text-center">
-                                        Load more users
+                                        加载更多用户
                                     </div>
                                 </div>
                             </div>
@@ -183,20 +181,24 @@
                     <div class="row center-block text-center">
                         <div class="tile panel panel-body main text-center">
                             <p>
-                                <p>
-                                    sort by : <input type="radio" ng-model="sort_uploads.selected" value="date" name="sort" ng-change="displayUploads(false, user, token)"> Creation date
-                                              <input type="radio" ng-model="sort_uploads.selected" value="size" name="sort" ng-change="displayUploads(false, user, token)"> Size
-                                </p>
-                                <p>
-                                    order by : <input type="radio" ng-model="sort_uploads_order.selected" value="desc" name="order" ng-change="displayUploads(false, user, token)"> Descending
-                                               <input type="radio" ng-model="sort_uploads_order.selected" value="asc" name="order" ng-change="displayUploads(false, user, token)"> Ascending
-                                </p>
-                                <p ng-if="user">
-                                    user : {{ user }} <i class="fa fa-remove" ng-click="displayUploads(false)"></i>
-                                </p>
-                                <p ng-if="token">
-                                    token : {{ token }} <i class="fa fa-remove" ng-click="displayUploads(false, user)"></i>
-                                </p>
+                            <p>
+                                排序方式 : <input type="radio" ng-model="sort_uploads.selected" value="date" name="sort"
+                                    ng-change="displayUploads(false, user, token)"> 创建日期
+                                <input type="radio" ng-model="sort_uploads.selected" value="size" name="sort"
+                                    ng-change="displayUploads(false, user, token)"> 大小
+                            </p>
+                            <p>
+                                排序顺序 : <input type="radio" ng-model="sort_uploads_order.selected" value="desc"
+                                    name="order" ng-change="displayUploads(false, user, token)"> 降序
+                                <input type="radio" ng-model="sort_uploads_order.selected" value="asc" name="order"
+                                    ng-change="displayUploads(false, user, token)"> 升序
+                            </p>
+                            <p ng-if="user">
+                                用户 : {{ user }} <i class="fa fa-remove" ng-click="displayUploads(false)"></i>
+                            </p>
+                            <p ng-if="token">
+                                令牌 : {{ token }} <i class="fa fa-remove" ng-click="displayUploads(false, user)"></i>
+                            </p>
                             </p>
                         </div>
                     </div>
@@ -208,26 +210,29 @@
                                     <div class="col-xs-12 col-sm-4 small file-name">
                                         <!-- UPLOAD ID / LINK -->
                                         <a href="{{getUploadUrl(upload)}}">{{ upload.id }}</a>
-                                        <br/>
+                                        <br />
                                         <!-- UPLOAD DATE -->
-                                        uploaded : {{ upload.createdAt | date:'medium' }}
-                                        <br/>
+                                        上传时间 : {{ upload.createdAt | date:'medium' }}
+                                        <br />
                                         <!-- EXPIRE DATE -->
-                                        expire : {{ upload.expireAt | date:'medium' }}
+                                        过期时间 : {{ upload.expireAt | date:'medium' }}
                                         <!-- TOKEN -->
-                                        <br ng-if="upload.user"/>
+                                        <br ng-if="upload.user" />
                                         <span ng-if="upload.user">
-                                            user : <a href="" ng-click="displayUploads(false,upload.user)">{{ upload.user }}</a>
+                                            用户 : <a href="" ng-click="displayUploads(false,upload.user)">{{ upload.user
+                                                }}</a>
                                         </span>
-                                        <br ng-if="upload.token"/>
+                                        <br ng-if="upload.token" />
                                         <span ng-if="upload.token">
-                                            token : <a href="" ng-click="displayUploads(false,upload.user,upload.token)">{{ upload.token }}</a>
+                                            令牌 : <a href="" ng-click="displayUploads(false,upload.user,upload.token)">{{
+                                                upload.token }}</a>
                                         </span>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 small file-name">
                                         <div ng-repeat="file in upload.files | filter: {status: 'uploaded'}">
                                             <a href="{{getFileUrl(upload,file)}}">{{ file.fileName }}</a>
-                                            <button style="background-color: transparent; border: none;" data-clipboard data-clipboard-text="{{getFileUrl(upload,file)}}">
+                                            <button style="background-color: transparent; border: none;" data-clipboard
+                                                data-clipboard-text="{{getFileUrl(upload,file)}}">
                                                 <span class="glyphicon glyphicon-copy"></span>
                                             </button>
                                             <span class="pull-right">{{ humanReadableSize(file.fileSize) }}</span>
@@ -237,7 +242,7 @@
                                         <!-- REMOVE -->
                                         <button class="btn btn-danger btn-sm" ng-click="deleteUpload(upload)">
                                             <span class="glyphicon glyphicon-remove"></span><span
-                                                class="hidden-xs hidden-sm hidden-md"> Remove</span>
+                                                class="hidden-xs hidden-sm hidden-md"> 删除</span>
                                         </button>
                                     </div>
                                 </div>
@@ -250,7 +255,7 @@
                             <div class="tile panel panel-body main" ng-click="displayUploads(true)">
                                 <div class="row">
                                     <div class="col-xs-12 text-center">
-                                        Load more uploads
+                                        加载更多上传
                                     </div>
                                 </div>
                             </div>

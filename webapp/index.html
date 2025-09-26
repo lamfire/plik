@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 <html ng-app="plik">
+
 <head>
     <!-- META -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="temporary file upload service">
+    <meta name="description" content="临时文件上传服务">
     <meta name="author" content="Mathieu Bodjikian, Charles-Antoine Mathieu">
 
     <title ng-bind="title"></title>
@@ -20,52 +20,57 @@
 </head>
 
 <body>
-<div id="view">
-    <!-- HEADER -->
-    <header ng-controller="MenuCtrl">
-        <div class="container-fluid">
-            <div class="row">
-                <!-- PLIK LOGO -->
-                <div class="col-sm-3 text-center">
-                    <h1><a href="#/_">{{title}}</a></h1>
-                </div>
-                <!-- TOP MENU -->
-                <div class="col-sm-9 text-right hidden-xs">
-                    <a ng-if="auth_button && isFeatureEnabled('authentication') && !user" href="#/login"><i class="fa fa-lock"></i> Authentication</a>
-                    <a ng-if="isFeatureEnabled('authentication') && user" href="#/login">{{user.login}}</a>
-                    &nbsp;
-                    <a ng-if="isFeatureEnabled('authentication') && user && user.admin" href="#/admin"><i class="fa fa-wrench"></i> Admin&nbsp;</a>
-                    <a ng-if="isFeatureEnabled('clients')" href="#/clients"><i class="fa fa-keyboard-o"></i> Command line client</a>
-                    <a ng-if="isFeatureEnabled('github')" href="https://github.com/lamfire/plik/"><i class="fa fa-github"></i> Source code</a>
-                </div>
-                <!-- TOP MENU ( mobile ) -->
-                <div class="col-sm-9 text-center hidden-sm hidden-md hidden-lg">
-                    <a ng-if="config.authentication && !user" href="#/login"><i class="fa fa-lock"></i> Authentication</a>
-                    <a ng-if="config.authentication && user" href="#/login">{{user.login}}</a>
+    <div id="view">
+        <!-- HEADER -->
+        <header ng-controller="MenuCtrl">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- PLIK LOGO -->
+                    <div class="col-sm-3 text-center">
+                        <h1><a href="#/_">{{title}}</a></h1>
+                    </div>
+                    <!-- TOP MENU -->
+                    <div class="col-sm-9 text-right hidden-xs">
+                        <a ng-if="auth_button && isFeatureEnabled('authentication') && !user" href="#/login"><i
+                                class="fa fa-lock"></i> 身份验证</a>
+                        <a ng-if="isFeatureEnabled('authentication') && user" href="#/login">{{user.login}}</a>
+                        &nbsp;
+                        <a ng-if="isFeatureEnabled('authentication') && user && user.admin" href="#/admin"><i
+                                class="fa fa-wrench"></i> 管理员&nbsp;</a>
+                        <a ng-if="isFeatureEnabled('clients')" href="#/clients"><i class="fa fa-keyboard-o"></i>
+                            命令行客户端</a>
+                        <a ng-if="isFeatureEnabled('github')" href="https://github.com/lamfire/plik/"><i
+                                class="fa fa-github"></i> 源代码</a>
+                    </div>
+                    <!-- TOP MENU ( mobile ) -->
+                    <div class="col-sm-9 text-center hidden-sm hidden-md hidden-lg">
+                        <a ng-if="config.authentication && !user" href="#/login"><i class="fa fa-lock"></i> 身份验证</a>
+                        <a ng-if="config.authentication && user" href="#/login">{{user.login}}</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- ANGULARJS VIEW -->
-    <div id="angular-view" ng-view class="container-fluid"></div>
-</div>
-
-<!-- FOOTER -->
-<footer class="footer" ng-controller="MenuCtrl">
-    <div ng-if="config.abuseContact" class="container text-center">
-        <p>For abuse contact {{config.abuseContact}}</p>
+        <!-- ANGULARJS VIEW -->
+        <div id="angular-view" ng-view class="container-fluid"></div>
     </div>
-</footer>
 
-<!-- configuration -->
-<script src="js/custom.js" type="text/javascript"></script>
+    <!-- FOOTER -->
+    <footer class="footer" ng-controller="MenuCtrl">
+        <div ng-if="config.abuseContact" class="container text-center">
+            <p>举报滥用请联系 {{config.abuseContact}}</p>
+        </div>
+    </footer>
 
-<!-- framework, modules and libraries -->
-<script src="js/vendor.js" type="text/javascript"></script>
+    <!-- configuration -->
+    <script src="js/custom.js" type="text/javascript"></script>
 
-<!-- application -->
-<script src="js/app.js" type="text/javascript"></script>
+    <!-- framework, modules and libraries -->
+    <script src="js/vendor.js" type="text/javascript"></script>
+
+    <!-- application -->
+    <script src="js/app.js" type="text/javascript"></script>
 
 </body>
+
 </html>

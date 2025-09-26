@@ -14,18 +14,18 @@
             <p>&nbsp;</p>
             <!-- USER STATS -->
             <div class="menu-item text-center" ng-if="user.stats">
-                <p>Uploads : {{user.stats.uploads}}</p>
+                <p>上传 : {{user.stats.uploads}}</p>
 
-                <p>Files : {{user.stats.files}}</p>
+                <p>文件 : {{user.stats.files}}</p>
 
-                <p>Total Size : {{humanReadableSize(user.stats.totalSize)}}</p>
+                <p>总大小 : {{humanReadableSize(user.stats.totalSize)}}</p>
             </div>
         </div>
         <!-- UPLOAD FILE BUTTON -->
         <div class="tile menu">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="mainpage()">
-                    <i class="fa fa-upload"></i> Upload files
+                    <i class="fa fa-upload"></i> 上传文件
                 </button>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="tile menu" ng-if="!fake_user">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="editAccount()">
-                    <i class="fa fa-pencil"></i> Edit account
+                    <i class="fa fa-pencil"></i> 编辑账户
                 </button>
             </div>
         </div>
@@ -41,7 +41,7 @@
         <div class="tile menu">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="logout()">
-                    <i class="fa fa-sign-out"></i> Logout
+                    <i class="fa fa-sign-out"></i> 退出登录
                 </button>
             </div>
         </div>
@@ -49,7 +49,7 @@
         <div class="tile menu" ng-if="display=='uploads'">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="displayTokens()">
-                    <i class="fa fa-ticket"></i> Tokens
+                    <i class="fa fa-ticket"></i> 令牌
                 </button>
             </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="tile menu" ng-if="display=='tokens'">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-primary btn-block" ng-click="displayUploads()">
-                    <i class="fa fa-upload"></i> Uploads
+                    <i class="fa fa-upload"></i> 上传
                 </button>
             </div>
         </div>
@@ -65,7 +65,7 @@
         <div class="tile menu">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-danger btn-block" ng-click="deleteUploads()">
-                    <i class="fa fa-trash"></i> DELETE UPLOADS
+                    <i class="fa fa-trash"></i> 删除上传
                 </button>
             </div>
         </div>
@@ -73,7 +73,7 @@
         <div class="tile menu">
             <div class="menu-item">
                 <button type="button" class="btn btn-lg btn-danger btn-block" ng-click="deleteAccount()">
-                    <i class="fa fa-remove"></i> DELETE ACCOUNT
+                    <i class="fa fa-remove"></i> 删除账户
                 </button>
             </div>
         </div>
@@ -86,19 +86,19 @@
                 <div class="tile panel panel-body main">
                     <div class="row center-block text-center">
                         <p>
-                            Tokens can be used to authenticate the command line client<br/>
-                            They have to be specified in the ~/.plikrc file ( Token="xxxxx" )
+                            令牌可用于验证命令行客户端<br/>
+                            需要在 ~/.plikrc 文件中指定 ( Token="xxxxx" )
                         </p>
 
                         <div class="col-xs-10 col-sm-8 col-md-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-3 text-center">
                             <div class="input-group">
-                                <input type="text" ng-model="comment" class="form-control" placeholder="Comment">
+                                <input type="text" ng-model="comment" class="form-control" placeholder="备注">
                                 <!-- CREATE TOKEN BUTTON -->
                                 <div class="input-group-btn">
                                     <button title="Browse" type="button" class="btn btn-default"
                                             ng-click="createToken(comment)">
                                         <i class="glyphicon glyphicon-plus"></i>
-                                        <span class="hidden-xs hidden-sm hidden-md"> Create token</span>
+                                        <span class="hidden-xs hidden-sm hidden-md"> 创建令牌</span>
                                     </button>
                                 </div>
                             </div>
@@ -122,7 +122,7 @@
                         <div class="col-sm-2">
                             <!-- REVOKE TOKEN BUTTON -->
                             <button class="btn btn-danger btn-sm" ng-click="revokeToken(token)">
-                                <span class="glyphicon glyphicon-remove"></span><span> Revoke</span>
+                                <span class="glyphicon glyphicon-remove"></span><span> 撤销</span>
                             </button>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                     <div class="tile panel panel-body main" ng-click="getTokens(true)">
                         <div class="row">
                             <div class="col-xs-12 text-center">
-                                Load more tokens
+                                加载更多令牌
                             </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@
                             &nbsp;{{token}}&nbsp;
                             <!-- REMOVE UPLOADS BUTTON -->
                             <button class="btn btn-danger btn-sm" ng-click="deleteUploads(token)">
-                                <span class="glyphicon glyphicon-trash"></span><span> Remove all</span>
+                                <span class="glyphicon glyphicon-trash"></span><span> 全部删除</span>
                             </button>
                         </div>
                     </div>
@@ -168,14 +168,14 @@
                             <a href="{{getUploadUrl(upload)}}">{{ upload.id }}</a>
                             <br/>
                             <!-- UPLOAD DATE -->
-                            uploaded : {{ upload.createdAt | date:'medium' }}
+                            上传时间 : {{ upload.createdAt | date:'medium' }}
                             <br/>
                             <!-- EXPIRE DATE -->
-                            expire : {{ upload.expireAt | date:'medium' }}
+                            过期时间 : {{ upload.expireAt | date:'medium' }}
                             <!-- TOKEN -->
                             <br ng-if="upload.token"/>
                             <span ng-if="upload.token">
-                                token :
+                                令牌 :
                                 <a href="" ng-click="displayUploads(upload.token)">
                                     {{upload.token}}
                                 </a>
@@ -196,7 +196,7 @@
                             <!-- REMOVE -->
                             <button class="btn btn-danger btn-sm" ng-click="deleteUpload(upload)">
                                 <span class="glyphicon glyphicon-remove"></span><span
-                                    class="hidden-xs hidden-sm hidden-md"> Remove</span>
+                                    class="hidden-xs hidden-sm hidden-md"> 删除</span>
                             </button>
                         </div>
                     </div>
@@ -209,7 +209,7 @@
                 <div class="tile panel panel-body main" ng-click="getUploads(true)">
                     <div class="row">
                         <div class="col-xs-12 text-center">
-                            Load more uploads
+                            加载更多上传
                         </div>
                     </div>
                 </div>

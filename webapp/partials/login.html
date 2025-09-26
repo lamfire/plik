@@ -14,16 +14,16 @@
 
                                 <!-- LOGIN INPUT -->
                                 <div class="form-group">
-                                    <label for="login" class="col-sm-2 control-label">Login</label>
+                                    <label for="login" class="col-sm-2 control-label">登录名</label>
                                     <div class="col-sm-8">
-                                        <input id="login" type="text" ng-model="$parent.username" class="form-control" placeholder="Login">
+                                        <input id="login" type="text" ng-model="$parent.username" class="form-control" placeholder="登录名">
                                     </div>
                                 </div>
                                 <!-- PASSWORD INPUT -->
                                 <div class="form-group">
-                                    <label for="password" class="col-sm-2 control-label">Password</label>
+                                    <label for="password" class="col-sm-2 control-label">密码</label>
                                     <div class="col-sm-8">
-                                        <input id="password" type="password" ng-model="$parent.password" class="form-control" placeholder="Password">
+                                        <input id="password" type="password" ng-model="$parent.password" class="form-control" placeholder="密码">
                                     </div>
                                 </div>
                             </form>
@@ -35,7 +35,7 @@
                             <div class="text-center auth-btn">
                                 <button title="Login" type="button" class="btn btn-primary" ng-click="login()">
                                     <span class="fa fa-login"></span>
-                                    Login
+                                    登录
                                 </button>
                             </div>
                         </div>
@@ -48,14 +48,14 @@
                     <div class="text-center auth-btn" ng-show="config.googleAuthentication">
                         <button title="Google" type="button" class="btn btn-primary" ng-click="google()">
                             <span class="fa fa-google"></span>
-                            Login with Google
+                            使用 Google 登录
                         </button>
                     </div>
                     <!-- OVH BUTTON -->
                     <div class="text-center auth-btn" ng-show="config.ovhAuthentication">
                         <button title="OVH" type="button" class="btn btn-primary" ng-click="ovh()">
                             <span class="fa fa-circle-o"></span>
-                            Login with OVH
+                            使用 OVH 登录
                         </button>
                     </div>
                 </div>
