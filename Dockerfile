@@ -5,6 +5,7 @@ RUN echo "https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.20/main/" > /etc/apk/re
 # Install needed binaries
 RUN apk add --no-cache git make bash
 RUN npm config set registry https://registry.npmmirror.com/
+RUN bower install --registry=https://registry.npmmirror.com
 # Add the source code
 COPY Makefile .
 COPY webapp /webapp
