@@ -2,6 +2,7 @@
 plikd
 clients
 *.db
+*.exe
 *.db-wal
 *.db-shm
 server/files

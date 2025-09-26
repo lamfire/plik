@@ -3,8 +3,8 @@ plik.controller('AdminCtrl', ['$scope', '$api', '$config', '$dialog', '$location
     function ($scope, $api, $config, $dialog, $location) {
 
         $scope.config = {}
-        $scope.sort_uploads = { selected : 'date' };
-        $scope.sort_uploads_order = { selected : 'desc' };
+        $scope.sort_uploads = { selected: 'date' };
+        $scope.sort_uploads_order = { selected: 'desc' };
 
         // Get server config
         $config.config
@@ -182,7 +182,7 @@ plik.controller('AdminCtrl', ['$scope', '$api', '$config', '$dialog', '$location
                 templateUrl: 'partials/user.html',
                 controller: 'UserController',
                 resolve: {
-                    args: function () { return { user : user }; }
+                    args: function () { return { user: user }; }
                 }
             }).result.then(
                 function (result) {
@@ -235,7 +235,7 @@ plik.controller('AdminCtrl', ['$scope', '$api', '$config', '$dialog', '$location
             }
 
             // Don't let users impersonate themselves even if harmless
-            if ($scope.original_user.id ===  user.id) return;
+            if ($scope.original_user.id === user.id) return;
 
             $scope.setFakeUser(user);
 
@@ -278,7 +278,7 @@ plik.controller('AdminCtrl', ['$scope', '$api', '$config', '$dialog', '$location
             }
             return "unlimited"
         };
-        
+
         $scope.getUserMaxTTL = function (user) {
             if (user.maxTTL > 0) {
                 return getHumanReadableTTLString(user.maxTTL)

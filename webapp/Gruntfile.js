@@ -23,9 +23,9 @@ module.exports = function (grunt) {
                     'node_modules/jquery/dist/jquery.js',
                     'node_modules/bootstrap/dist/js/bootstrap.js',
                     'node_modules/angular/angular.js',
-                    'node_modules/ng-file-upload/ng-file-upload-shim.js',
-                    'node_modules/ng-file-upload/ng-file-upload.js',
-                    'node_modules/angular-sanitize/angular-sanitize.min.js',
+                    'node_modules/ng-file-upload/dist/ng-file-upload-shim.js',
+                    'node_modules/ng-file-upload/dist/ng-file-upload.js',
+                    'node_modules/angular-sanitize/angular-sanitize.js',
                     'node_modules/angular-route/angular-route.js',
                     'node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js',
                     'node_modules/angular-markdown-directive/markdown.js',
@@ -122,8 +122,8 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                mangle: true,
-                compress: true,
+                mangle: false,
+                compress: false,
                 report: true,
                 sourceMap: true
             },
