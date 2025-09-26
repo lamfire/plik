@@ -18,21 +18,21 @@ $ make docker
 
 然后您可以运行一个实例并将本地端口 8080 映射到 plik 端口：   
 ```sh
-$ docker run -t -d -p 8080:8080 rootgg/plik
+$ docker run -t -d -p 8080:8080 lamfire8390/plik:latest
 ab9b2c99da1f3e309cd3b12392b9084b5cafcca0325d7d47ff76f5b1e475d1b9
 ```
 
 要使用不同的配置文件，您可以在运行时将单个文件映射到容器：   
 这里，我们将本地文件 plikd.cfg 映射到 home/plik/server/plikd.cfg，这是容器中的默认配置文件位置：   
 ```sh
-$ docker run -t -d -p 8080:8080 -v plikd.cfg:/home/plik/server/plikd.cfg rootgg/plik
+$ docker run -t -d -p 8080:8080 -v plikd.cfg:/home/plik/server/plikd.cfg lamfire8390/plik:latest
 ab9b2c99da1f3e309cd3b12392b9084b5cafcca0325d7d47ff76f5b1e475d1b9
 ```
 
 您还可以使用卷将上传存储在容器外部：   
 这里，我们将本地文件夹 /data 映射到容器的 /home/plik/server/files 文件夹，这是默认的上传目录：   
 ```sh
-$ docker run -t -d -p 8080:8080 -v /data:/home/plik/server/files rootgg/plik
+$ docker run -t -d -p 8080:8080 -v /data:/home/plik/server/files lamfire8390/plik:latest
 ab9b2c99da1f3e309cd3b12392b9084b5cafcca0325d7d47ff76f5b1e475d1b9
 ```
 
