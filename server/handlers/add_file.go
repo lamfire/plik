@@ -206,7 +206,7 @@ func AddFile(ctx *context.Context, resp http.ResponseWriter, req *http.Request) 
 
 		url += fmt.Sprintf("/file/%s/%s/%s", upload.ID, file.ID, file.Name)
 
-		_, _ = resp.Write([]byte(url + "\n"))
+		_, _ = resp.Write([]byte(url))
 	} else {
 		common.WriteJSONResponse(resp, file)
 	}
