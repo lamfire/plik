@@ -147,15 +147,16 @@ func Authenticate(allowToken bool) context.Middleware {
 					return
 				}
 				if claims != nil {
-					user, err := getUserFromJWTClaims(ctx, claims)
-					if err != nil {
-						ctx.Error(err)
-						return
+					if config.JwtValidUser {
+						user, err := getUserFromJWTClaims(ctx, claims)
+						if err != nil {
+							ctx.Error(err)
+							return
+						}
+						if user != nil {
+							ctx.SetUser(user)
+						}
 					}
-					if user != nil {
-						ctx.SetUser(user)
-					}
-
 					next.ServeHTTP(resp, req)
 					return
 				}
