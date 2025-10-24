@@ -127,7 +127,7 @@ func (ctx *Context) setUser(upload *common.Upload) (err error) {
 	user := ctx.GetUser()
 	token := ctx.GetToken()
 
-	if config.FeatureAuthentication == common.FeatureForced && !config.AllowAnonymous && user == nil {
+	if config.FeatureAuthentication == common.FeatureForced && user == nil {
 		return fmt.Errorf("anonymous uploads are disabled")
 	}
 
