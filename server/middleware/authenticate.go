@@ -80,6 +80,9 @@ func VerifyJWT(ctx *context.Context) (jwt.MapClaims, *common.HTTPError) {
 func getUserFromJWTClaims(ctx *context.Context, claims jwt.MapClaims) (*common.User, *common.HTTPError) {
 	userID, ok := claims["uid"].(string)
 	if !ok {
+		userID, _ = claims["user_id"].(string)
+	}
+	if userID == "" {
 		return nil, &common.HTTPError{Message: "missing user ID in JWT", StatusCode: http.StatusForbidden}
 	}
 
@@ -144,16 +147,15 @@ func Authenticate(allowToken bool) context.Middleware {
 					return
 				}
 				if claims != nil {
-					if config.JwtValidUser {
-						user, err := getUserFromJWTClaims(ctx, claims)
-						if err != nil {
-							ctx.Error(err)
-							return
-						}
-						if user != nil {
-							ctx.SetUser(user)
-						}
+					user, err := getUserFromJWTClaims(ctx, claims)
+					if err != nil {
+						ctx.Error(err)
+						return
 					}
+					if user != nil {
+						ctx.SetUser(user)
+					}
+
 					next.ServeHTTP(resp, req)
 					return
 				}
