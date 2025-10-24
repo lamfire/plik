@@ -45,13 +45,13 @@ func VerifyJWT(ctx *context.Context) (jwt.MapClaims, *common.HTTPError) {
 	// Check Authorization header
 	authHeader := req.Header.Get("Authorization")
 	if authHeader == "" {
-		return nil, nil
+		return nil, &common.HTTPError{Message: "JWT token not found", StatusCode: http.StatusForbidden}
 	}
 
 	// Parse Bearer JWT
 	parts := strings.Split(authHeader, " ")
 	if len(parts) != 2 || parts[0] != "Bearer" {
-		return nil, nil
+		return nil, &common.HTTPError{Message: "Missing JWT token header", StatusCode: http.StatusForbidden}
 	}
 
 	jwtToken := parts[1]
