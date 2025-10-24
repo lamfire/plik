@@ -40,7 +40,7 @@ func getUserFromToken(ctx *context.Context) (*common.User, *common.Token, *commo
 
 func VerifyJWT(ctx *context.Context) (jwt.MapClaims, *common.HTTPError) {
 	req := ctx.GetReq()
-	jwtSignatureKey := ctx.GetConfig().AuthenticationSignatureKey
+	jwtSignatureKey := ctx.GetConfig().JwtSecretKey
 
 	// Check Authorization header
 	authHeader := req.Header.Get("Authorization")
@@ -135,15 +135,16 @@ func Authenticate(allowToken bool) context.Middleware {
 	return func(ctx *context.Context, next http.Handler) http.Handler {
 		return http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
 			config := ctx.GetConfig()
-			if config.FeatureAuthentication != common.FeatureDisabled {
-				// 1. Try JWT authentication first
+
+			// 1. Try JWT authentication first
+			if config.JwtAuthentication {
 				claims, err := VerifyJWT(ctx)
 				if err != nil {
 					ctx.Error(err)
 					return
 				}
 				if claims != nil {
-					if !config.AllowAnonymous {
+					if config.JwtValidUser {
 						user, err := getUserFromJWTClaims(ctx, claims)
 						if err != nil {
 							ctx.Error(err)
@@ -156,7 +157,9 @@ func Authenticate(allowToken bool) context.Middleware {
 					next.ServeHTTP(resp, req)
 					return
 				}
+			}
 
+			if config.FeatureAuthentication != common.FeatureDisabled {
 				// 2. Try token authentication
 				if allowToken {
 					user, token, err := getUserFromToken(ctx)

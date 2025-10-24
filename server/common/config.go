@@ -84,8 +84,9 @@ type Configuration struct {
 	Stream              bool `json:"stream"`              // Deprecated: >1.3.6
 	ProtectedByPassword bool `json:"protectedByPassword"` // Deprecated: >1.3.6
 
-	AuthenticationSignatureKey string `json:"authenticationSignatureKey"`
-	AllowAnonymous             bool   `json:"allowAnonymous"`
+	JwtAuthentication bool   `json:"jwtAuthentication"`
+	JwtSecretKey      string `json:"jwtSecretKey"`
+	JwtValidUser      bool   `json:"jwtValidUser"`
 
 	GoogleAuthentication bool     `json:"googleAuthentication"`
 	GoogleAPISecret      string   `json:"-"`
@@ -447,8 +448,19 @@ func (config *Configuration) String() string {
 			str += "OVH authentication : disabled\n"
 		}
 	}
-	str += fmt.Sprintf("Allow anonymous : %s\n", config.AllowAnonymous)
-	str += fmt.Sprintf("Authentication signature key : %s\n", config.AuthenticationSignatureKey)
+
+	// JWT
+	if config.JwtAuthentication {
+		str += "JwtAuthentication : enabled\n"
+	} else {
+		str += "JwtAuthentication : disabled\n"
+	}
+	str += fmt.Sprintf("JwtSecretKey : %s\n", config.JwtSecretKey)
+	if config.JwtValidUser {
+		str += "JwtValidUser : enabled\n"
+	} else {
+		str += "JwtValidUser : disabled\n"
+	}
 
 	return str
 }
