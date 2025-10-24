@@ -264,11 +264,14 @@ Token = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
 #### 配置文件设置
 ```
-# 启用认证
-FeatureAuthentication = "forced"
+# 启用JWT认证
+JwtAuthentication = "enabled"
 
 # JWT 签名密钥（用于签名和验证 JWT）
-AuthenticationSignatureKey = "your-secret-key-here"
+JwtSecretKey = "your-secret-key-here"
+
+# 如果只验证证书不验证用户
+JwtValidUser = "disabled"
 
 # 会话超时
 SessionTimeout = "24h"
