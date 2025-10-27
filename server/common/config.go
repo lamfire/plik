@@ -84,9 +84,13 @@ type Configuration struct {
 	Stream              bool `json:"stream"`              // Deprecated: >1.3.6
 	ProtectedByPassword bool `json:"protectedByPassword"` // Deprecated: >1.3.6
 
+	// JWT Flags
 	JwtAuthentication bool   `json:"jwtAuthentication"`
 	JwtSecretKey      string `json:"jwtSecretKey"`
 	JwtValidUser      bool   `json:"jwtValidUser"`
+
+	// Allow anonymous get
+	AllowAnonymousGetFile bool `json:"allowAnonymousGetFile"`
 
 	GoogleAuthentication bool     `json:"googleAuthentication"`
 	GoogleAPISecret      string   `json:"-"`
@@ -461,6 +465,9 @@ func (config *Configuration) String() string {
 	} else {
 		str += "JwtValidUser : disabled\n"
 	}
+
+	// Allow Anonymous GetFile
+	str += fmt.Sprintf("AllowAnonymousGetFile : %t\n", config.AllowAnonymousGetFile)
 
 	return str
 }

@@ -339,7 +339,6 @@ func (ps *PlikServer) getHTTPHandler() (handler http.Handler) {
 	router.Handle("/file/{uploadID}", tokenChain.Append(middleware.Upload).Then(handlers.AddFile)).Methods("POST")
 	router.Handle("/file/{uploadID}/{fileID}/{filename}", tokenChain.AppendChain(getFileChain).Then(handlers.AddFile)).Methods("POST")
 	router.Handle("/file/{uploadID}/{fileID}/{filename}", tokenChain.AppendChain(getFileChain).Then(handlers.RemoveFile)).Methods("DELETE")
-	router.Handle("/file/{uploadID}/{fileID}/{filename}", tokenChainWithRedirect.AppendChain(getFileChain).Then(handlers.GetFile)).Methods("HEAD", "GET")
 	router.Handle("/stream/{uploadID}/{fileID}/{filename}", tokenChain.AppendChain(getFileChain).Then(handlers.AddFile)).Methods("POST")
 	router.Handle("/stream/{uploadID}/{fileID}/{filename}", tokenChainWithRedirect.AppendChain(getFileChain).Then(handlers.GetFile)).Methods("HEAD", "GET")
 	router.Handle("/archive/{uploadID}/{filename}", tokenChainWithRedirect.Append(middleware.Upload).Then(handlers.GetArchive)).Methods("HEAD", "GET")
@@ -369,6 +368,14 @@ func (ps *PlikServer) getHTTPHandler() (handler http.Handler) {
 	router.Handle("/users", adminChain.Append(middleware.Paginate).Then(handlers.GetUsers)).Methods("GET")
 	router.Handle("/uploads", adminChain.Append(middleware.Paginate).Then(handlers.GetUploads)).Methods("GET")
 
+	// Allow Anonymous GetFile
+	if ps.config.AllowAnonymousGetFile {
+		router.Handle("/file/{uploadID}/{fileID}/{filename}", stdChainWithRedirect.AppendChain(getFileChain).Then(handlers.GetFile)).Methods("HEAD", "GET")
+	} else {
+		router.Handle("/file/{uploadID}/{fileID}/{filename}", tokenChainWithRedirect.AppendChain(getFileChain).Then(handlers.GetFile)).Methods("HEAD", "GET")
+	}
+
+	// No Web Interface
 	if !ps.config.NoWebInterface {
 
 		_, err := os.Stat(ps.config.WebappDirectory)

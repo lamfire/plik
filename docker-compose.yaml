@@ -1,0 +1,12 @@
+services:
+  plik:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: plik
+    network_mode: bridge
+    ports:
+      - "8888:8080"
+    environment:
+      - PLIKD_DEBUG=true
+    restart: always
