@@ -111,10 +111,8 @@ func (ps *PlikServer) startMetricsHTTPServer() {
 	}()
 
 	go func() {
-		select {
-		case <-ps.close:
-			ps.shutdownMetricsHTTPServer()
-		}
+		<-ps.close
+		ps.shutdownMetricsHTTPServer()
 	}()
 }
 
@@ -447,7 +445,7 @@ func NewDataBackend(impl string, params map[string]interface{}) (backend data.Ba
 	case "testing":
 		backend = data_test.NewBackend()
 	default:
-		return nil, fmt.Errorf("Invalid data backend %s", impl)
+		return nil, fmt.Errorf("invalid data backend %s", impl)
 	}
 
 	return backend, nil
